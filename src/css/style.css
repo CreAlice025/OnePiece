@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+@keyframes pulse-inverse {
+
+    0%,
+    100% {
+        background-color: rgba(0, 0, 0, 0.664);
+    }
+
+    50% {
+        background-color: #000000da;
+    }
+}
+
+.hover\:animate-pulse-inverse:hover {
+    animation: pulse-inverse 1.2s ease-in-out infinite;
+}

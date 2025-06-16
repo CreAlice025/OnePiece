@@ -6,28 +6,48 @@
   <link rel="icon" type="image/svg+xml" href="./public/icons8-z-50.png" />
   <link rel="stylesheet" href="./src/css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dragon Ball Z</title>
+  <title>Dragon Ball Z - Persos</title>
 </head>
 
-<body class="bg-amber-300 box-border">
-  <header class="pb-10">
-    <div class="w-full h-50 flex justify-center items-center"><img
-        src="https://upload.wikimedia.org/wikipedia/fr/f/f2/Dragon_Ball_Z_Logo.svg" alt="logo DragonBall Z"
-        class="max-w-xs h-auto"></div>
-    <div class="flex justify-end gap-10 pr-30">
-      <button id="suivant" class="border-2 border-amber-500 rounded-md p-2 bg-white/30 hover:bg-amber-500 hover:border-amber-200 hover:cursor-pointer"> Page suivante </button>
-      <button id="prescedent" class="border-2 border-amber-500 rounded-md p-2 bg-white/30 hover:bg-amber-500 hover:border-amber-200 hover:cursor-pointer"> Page prescedente</button>
-    </div>
+<body class="bg-black min-h-screen bg-[url('/public/bg.webp')] bg-cover bg-fixed bg-center box-border">
 
+  <img id="dragonBall" src="https://upload.wikimedia.org/wikipedia/commons/9/96/Dragon_ball.svg" alt="DBZ" class="w-16 h-16 fixed top-0 left-0 z-10 pointer-events-none">
+
+  <header class="bg-black/80 w-full flex justify-between items-center text-amber-50 px-10 py-6">
+    <div class="flex items-center gap-4">
+      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f2/Dragon_Ball_Z_Logo.svg" alt="logo DragonBall Z"
+        class="h-12 w-auto" />
+    </div>
+    <ul class="flex gap-10 text-lg font-semibold">
+      <a href="./index.html"><li
+        class="relative cursor-pointer transition duration-300 hover:text-yellow-400 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-400 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300">
+        Personnages
+      </li></a>
+      <a href="./monde.html"><li
+        class="relative cursor-pointer transition duration-300 hover:text-yellow-400 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-400 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300">
+        Univers
+      </li></a>
+    </ul>
   </header>
+
   <main>
-    <div id="app" class="grid grid-cols-5 gap-3 p-10"></div>
+
+    <div id="app" class="grid grid-cols-5 gap-3 p-10 z-20 relative"></div>
+    <div id="overlay" class="fixed inset-0 z-50 bg-black/90 h-max-screen hidden items-center justify-center p-4"></div>
   </main>
 
-  <footer class="h-30 p-10 text-3xl text-end">
-    <h1>Alice Cordier</h1>
+  <footer class="fixed bottom-0 left-0 bg-black/90 w-full flex justify-between items-center h-20 text-md text-end p-10 z-30">
+    <h1 class="text-white">Alice Cordier</h1>
+    <div class="flex justify-end gap-10">
+      <button id="suivant"
+        class="p-2 text-amber-50 cursor-pointer transition duration-300 hover:text-yellow-400 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-400 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300">
+        Page suivante </button>
+      <button id="prescedent"
+        class="p-2 text-amber-50 cursor-pointer transition duration-300 hover:text-yellow-400 hover:scale-105 after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-yellow-400 after:left-0 after:-bottom-1 hover:after:w-full after:transition-all after:duration-300">
+        Page prescedente</button>
+    </div>
   </footer>
-  <script type="module" src="./src/ts/main.ts"></script>
+  <script type="module" src="./src/ts/pages/main.ts"></script>
 </body>
 
 </html>

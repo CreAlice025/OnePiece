@@ -55,58 +55,84 @@ export default class Character {
         this.deletedAt = data.deletedAt
     }
 
+    static async fetchAll(): Promise<Character[]> {
+        try {
+            const res = await fetch("https://dragonball-api.com/api/characters")
+            const data: CharacterAPIres = await res.json()
+            return data.items.map(item => new Character(item))
+        } catch (err) {
+            console.log("erreur lors du chargement des persos", err)
+            return []
+        }
+
+    }
+
     renderHtml() {
         const card = new ElementHTML()
             .createElement("div")
-            .class("flex flex-col rounded-lg border-2 border-yellow-500 h-400 mx-auto text-center p-5 gap-10")
+            .class("relative flex flex-row items-center rounded-2xl border-4 border-yellow-400 bg-black/90 max-w-6xl mx-auto p-10 gap-10 text-left shadow-[0_0_12px_rgba(253,224,71,0.7)] text-amber-200")
+
+        new ElementHTML()
+            .createElement("button")
+            .textContent("Retour")
+            .class("absolute top-4 right-4 text-white text-2xl hover:text-yellow-400 z-20 hover:cursor-pointer")
+            .appendTo(card.element!)
+            .element!.addEventListener('click', () => {
+                const overlay = document.querySelector("#overlay")!
+                overlay.classList.add("hidden")
+            })
 
         new ElementHTML()
             .createElement("img")
             .setA("src", this.image || "https://image.jeuxvideo.com/medias-md/170147/1701466635-6880-card.jpg")
             .setA("alt", this.name)
             .appendTo(card.element!)
-            .class("h-1/3 w-auto object-contain p-10 border-b-2")
+            .class("w-1/3 max-h-[400px] object-contain border-r-2 pr-6 border-yellow-400")
+
+        const rightDiv = new ElementHTML()
+            .createElement("div")
+            .class("flex flex-col gap-4 w-2/3")
 
         new ElementHTML()
             .createElement("h1")
             .textContent(this.name)
-            .class('text-4xl')
-            .appendTo(card.element!)
+            .class('text-4xl text-yellow-400 font-bold')
+            .appendTo(rightDiv.element!)
 
         new ElementHTML()
             .createElement("p")
-            .textContent(this.ki + '/' + this.maxKi)
+            .textContent(`${this.ki} / ${this.maxKi}`)
             .class('text-2xl')
-            .appendTo(card.element!)
+            .appendTo(rightDiv.element!)
 
         new ElementHTML()
             .createElement("p")
             .textContent(this.affiliation)
             .class('text-2xl')
-            .appendTo(card.element!)
+            .appendTo(rightDiv.element!)
 
         new ElementHTML()
             .createElement("p")
             .textContent(`Race : ${this.race} | Genre : ${this.gender}`)
             .class('text-2xl')
-            .appendTo(card.element!)
+            .appendTo(rightDiv.element!)
 
         new ElementHTML()
             .createElement("p")
             .textContent(this.description)
-            .class('text-2xl text-justify')
-            .appendTo(card.element!)
+            .class('text-md text-justify leading-relaxed')
+            .appendTo(rightDiv.element!)
 
-
+        rightDiv.appendTo(card.element!)
 
         return card.element!
-
     }
+
 
     renderCard() {
         const card = new ElementHTML()
             .createElement("div")
-            .class("flex flex-col rounded-xl border-2 border-yellow-500 h-150 text-center bg-black/80 text-white transition-all duration-300 hover:scale-105 hover:bg-black/20 hover:text-black cursor-pointer")
+            .class("flex flex-col items-center justify-between p-4 h-[260px] rounded-2xl border-4 border-yellow-400 text-white text-center shadow-md transition-transform duration-300 ease-in-out cursor-pointer bg-black/80 hover:bg-blue-950 hover:animate-pulse-inverse hover:scale-105 hover:border-yellow-400")
 
         new ElementHTML()
             .createElement("p")
@@ -117,16 +143,15 @@ export default class Character {
             .setA("src", this.image || "https://image.jeuxvideo.com/medias-md/170147/1701466635-6880-card.jpg")
             .setA("alt", this.name)
             .appendTo(card.element!)
-            .class("h-1/2 w-auto object-contain p-5 pb-20 m-20 border-b-2")
+            .class("h-45 w-auto object-contain mb-2 border-b-2 pb-5 border-yellow-400")
 
         new ElementHTML()
             .createElement("h1")
             .textContent(this.name)
-            .class('text-4xl')
+            .class('text-2xl text-yellow-300 mb-1')
             .appendTo(card.element!)
 
         return card.element!
     }
 
 }
-

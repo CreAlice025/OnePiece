@@ -9,6 +9,23 @@ type PlanetData = {
     deletedAt: number | null
 }
 
+export type PlanetAPIres = {
+    items: PlanetData[]
+    meta: {
+        totalItems: number
+        itemCount: number
+        itemsPerPage: number
+        totalPages: number
+        currentPage: number
+    }
+    links: {
+        first: string
+        previous: string | null
+        next: string | null
+        last: string
+    }
+}
+
 export default class Planet {
     id: number
     name: string
@@ -26,10 +43,21 @@ export default class Planet {
         this.deletedAt = data.deletedAt
     }
 
+    static async fetchAll(): Promise<Planet[]> {
+        try {
+            const res = await fetch("https://dragonball-api.com/api/planets")
+            const data: PlanetAPIres = await res.json()
+            return data.items.map(item => new Planet(item))
+        } catch (err) {
+            console.log("erreur lors du chargement des persos", err)
+            return []
+        }
+    }
+
     renderHtml() {
         const card = new ElementHTML()
             .createElement("div")
-            .class("grid grid-col-6 gap-3 p-6")
+            .class(" flex flex-col items-center justify-between h-[400px] rounded-2xl border-4 border-yellow-400 text-white text-center shadow-md transition-transform duration-300 ease-in-out cursor-pointer bg-black/80 hover:bg-blue-950 hover:animate-pulse-inverse hover:scale-105 hover:border-yellow-400 p-6")
 
         new ElementHTML()
             .createElement("img")
