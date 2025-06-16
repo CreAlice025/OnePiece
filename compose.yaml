@@ -1,0 +1,12 @@
+services:
+  dbz:
+    build:
+      context: .
+      target: dev
+      dockerfile: Dockerfile
+    image: dbz:dev
+    container_name: dbz_dev
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
