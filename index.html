@@ -1,13 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./public/icons8-z-50.png" />
+  <link rel="stylesheet" href="./src/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragon Ball Z</title>
+</head>
+
+<body class="bg-amber-300 box-border">
+  <header class="pb-10">
+    <div class="w-full h-50 flex justify-center items-center"><img
+        src="https://upload.wikimedia.org/wikipedia/fr/f/f2/Dragon_Ball_Z_Logo.svg" alt="logo DragonBall Z"
+        class="max-w-xs h-auto"></div>
+    <div class="flex justify-end gap-10 pr-30">
+      <button id="suivant" class="border-2 border-amber-500 rounded-md p-2 bg-white/30 hover:bg-amber-500 hover:border-amber-200 hover:cursor-pointer"> Page suivante </button>
+      <button id="prescedent" class="border-2 border-amber-500 rounded-md p-2 bg-white/30 hover:bg-amber-500 hover:border-amber-200 hover:cursor-pointer"> Page prescedente</button>
+    </div>
+
+  </header>
+  <main>
+    <div id="app" class="grid grid-cols-5 gap-3 p-10"></div>
+  </main>
+
+  <footer class="h-30 p-10 text-3xl text-end">
+    <h1>Alice Cordier</h1>
+  </footer>
+  <script type="module" src="./src/ts/main.ts"></script>
+</body>
+
 </html>
