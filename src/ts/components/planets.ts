@@ -1,4 +1,4 @@
-import ElementHTML from "./element"
+import ElementHTML from "../components/element.ts"
 
 type PlanetData = {
     id: number,

@@ -1,4 +1,4 @@
-import Planet from "../planets.ts"
+import Planet from "../components/planets.ts"
 import "../ball.ts"
 
 async function renderWorldsPage() {

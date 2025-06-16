@@ -1,4 +1,4 @@
-import Character from "../characters.ts"
+import Character from "../components/characters.ts"
 import "../ball.ts"
 
 async function renderCharasPage() {
