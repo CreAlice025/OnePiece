@@ -11,6 +11,15 @@ type CharacterData = {
     image: string,
     affiliation: string,
     deletedAt: number | null
+    transformations?: Transformation[]
+}
+
+type Transformation = {
+    id: number,
+    name: string,
+    image: string,
+    ki: string,
+    deletedAt: number | null
 }
 
 export type CharacterAPIres = {
@@ -41,6 +50,7 @@ export default class Character {
     image: string
     affiliation: string
     deletedAt: number | null
+    transformations: Transformation[]
 
     constructor(data: CharacterData) {
         this.id = data.id
@@ -53,6 +63,7 @@ export default class Character {
         this.image = data.image
         this.affiliation = data.affiliation
         this.deletedAt = data.deletedAt
+        this.transformations = data.transformations ?? []
     }
 
     static async fetchAll(): Promise<Character[]> {
@@ -67,10 +78,27 @@ export default class Character {
 
     }
 
+    static async fetchById(id: number): Promise<Character | null> {
+        try {
+            const res = await fetch(`https://dragonball-api.com/api/characters/${id}`)
+            if (!res.ok) {
+                console.error("Erreur fetchById, status:", res.status)
+                return null
+            }
+            const data: CharacterData = await res.json()
+            return new Character(data)
+        } catch (err) {
+            console.error("Erreur fetchById:", err)
+            return null
+        }
+    }
+
     renderHtml() {
         const card = new ElementHTML()
             .createElement("div")
-            .class("relative flex flex-row items-center rounded-2xl border-4 border-yellow-400 bg-black/90 max-w-6xl mx-auto p-10 gap-10 text-left shadow-[0_0_12px_rgba(253,224,71,0.7)] text-amber-200")
+            .class("relative flex flex-col items-center rounded-2xl border-4 border-yellow-400 bg-black/90 max-w-6xl mx-auto p-10 gap-10 text-left shadow-[0_0_12px_rgba(253,224,71,0.7)] text-amber-200")
+            .style("max-height", "80vh")
+            .style("overflow-y", "auto")
 
         new ElementHTML()
             .createElement("button")
@@ -80,13 +108,19 @@ export default class Character {
             .element!.addEventListener('click', () => {
                 const overlay = document.querySelector("#overlay")!
                 overlay.classList.add("hidden")
+                document.body.classList.remove("overflow-hidden")
             })
+
+
+        const topRow = new ElementHTML()
+            .createElement("div")
+            .class("flex flex-row items-center gap-10")
 
         new ElementHTML()
             .createElement("img")
             .setA("src", this.image || "https://image.jeuxvideo.com/medias-md/170147/1701466635-6880-card.jpg")
             .setA("alt", this.name)
-            .appendTo(card.element!)
+            .appendTo(topRow.element!)
             .class("w-1/3 max-h-[400px] object-contain border-r-2 pr-6 border-yellow-400")
 
         const rightDiv = new ElementHTML()
@@ -123,11 +157,60 @@ export default class Character {
             .class('text-md text-justify leading-relaxed')
             .appendTo(rightDiv.element!)
 
-        rightDiv.appendTo(card.element!)
+
+        rightDiv.appendTo(topRow.element!)
+        topRow.appendTo(card.element!)
+
+
+        if (this.transformations.length > 0) {
+            new ElementHTML()
+                .createElement("h2")
+                .textContent("Transformations")
+                .class("text-3xl text-yellow-400 mt-6 mb-2 border-t pt-4")
+                .appendTo(card.element!)
+
+            const transfoWrapper = new ElementHTML()
+                .createElement("div")
+                .class("grid grid-cols-3 gap-4")
+
+            this.transformations.forEach(t => {
+                const transCard = new ElementHTML()
+                    .createElement("div")
+                    .class("flex flex-col items-center border border-yellow-400 p-2 rounded-lg bg-black/80")
+
+                new ElementHTML()
+                    .createElement("img")
+                    .setA("src", t.image)
+                    .setA("alt", t.name)
+                    .class("w-32 h-32 object-contain mb-2")
+                    .appendTo(transCard.element!)
+
+                new ElementHTML()
+                    .createElement("p")
+                    .textContent(t.name)
+                    .class("text-lg text-yellow-300 font-semibold")
+                    .appendTo(transCard.element!)
+
+                new ElementHTML()
+                    .createElement("p")
+                    .textContent(`Ki: ${t.ki}`)
+                    .class("text-sm")
+                    .appendTo(transCard.element!)
+
+                transCard.appendTo(transfoWrapper.element!)
+            })
+
+            transfoWrapper.appendTo(card.element!)
+        } else {
+            new ElementHTML()
+                .createElement("p")
+                .textContent("Aucune transformation connue pour ce perso.")
+                .class("text-md italic text-yellow-300")
+                .appendTo(card.element!)
+        }
 
         return card.element!
     }
-
 
     renderCard() {
         const card = new ElementHTML()

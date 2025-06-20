@@ -37,6 +37,11 @@ export default class ElementHTML {
         return this
     }
 
+    style(prop: string, value: string) {
+        if (this.element) this.element.style[prop as any] = value
+        return this
+    }
+
     appendTo(parent: HTMLElement): this {
         if (this.element)
             parent.appendChild(this.element)

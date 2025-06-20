@@ -37,9 +37,14 @@ export function renderCharas(characters: Character[]) {
         const card = character.renderCard()
         container.appendChild(card)
 
-        card.addEventListener('click', () => {
-            const detailCard = character.renderHtml()
-
+        card.addEventListener('click', async () => {
+            const fullCharacter = await Character.fetchById(character.id)
+            document.body.classList.add("overflow-hidden")
+            if (!fullCharacter) {
+                alert("Perso introuvable ou erreur")
+                return
+            }
+            const detailCard = fullCharacter.renderHtml()
             overlay.innerHTML = ""
             overlay.appendChild(detailCard)
             overlay.classList.remove("hidden", "opacity-0")
