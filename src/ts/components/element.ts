@@ -24,6 +24,19 @@ export default class ElementHTML {
         return this
     }
 
+    value(val: string): this {
+        if (this.element && (
+            this.element instanceof HTMLInputElement ||
+            this.element instanceof HTMLTextAreaElement ||
+            this.element instanceof HTMLSelectElement ||
+            this.element instanceof HTMLOptionElement
+        )
+        ) {
+            this.element.value = val
+        }
+        return this
+    }
+
     appendTo(parent: HTMLElement): this {
         if (this.element)
             parent.appendChild(this.element)
