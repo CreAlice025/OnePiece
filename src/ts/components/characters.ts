@@ -57,7 +57,7 @@ export default class Character {
 
     static async fetchAll(): Promise<Character[]> {
         try {
-            const res = await fetch("https://dragonball-api.com/api/characters")
+            const res = await fetch("https://dragonball-api.com/api/characters?limit=100")
             const data: CharacterAPIres = await res.json()
             return data.items.map(item => new Character(item))
         } catch (err) {

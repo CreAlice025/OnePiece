@@ -45,7 +45,7 @@ export default class Planet {
 
     static async fetchAll(): Promise<Planet[]> {
         try {
-            const res = await fetch("https://dragonball-api.com/api/planets")
+            const res = await fetch("https://dragonball-api.com/api/planets?limit=100")
             const data: PlanetAPIres = await res.json()
             return data.items.map(item => new Planet(item))
         } catch (err) {
@@ -64,12 +64,13 @@ export default class Planet {
             .setA("src", this.image || "https://static.wikia.nocookie.net/dragonball/images/b/b8/PlanetKannasa-1-.png/revision/latest?cb=20150621123059&path-prefix=fr")
             .setA("alt", this.name)
             .appendTo(card.element!)
-            .class("w-35 h-80")
+            .class("-full h-48 flex justify-center items-center overflow-hidden rounded-xl border-b-2 border-yellow-500")
 
         new ElementHTML()
             .createElement("h1")
             .textContent(this.name)
             .appendTo(card.element!)
+            .class('text-4xl text-yellow-400 font-bold')
 
         new ElementHTML()
             .createElement("p")
@@ -79,6 +80,7 @@ export default class Planet {
             .createElement("p")
             .textContent(this.description)
             .appendTo(card.element!)
+            .class('text-md text-justify leading-relaxed')
 
         return card.element!
 
